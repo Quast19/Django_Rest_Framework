@@ -1,16 +1,22 @@
-from django.shortcuts import render
-from django.http import JsonResponse , HttpResponse
+# from django.shortcuts import render
+# from django.http import JsonResponse , HttpResponse useless as drf response is used
 import json
 from django.forms.models import model_to_dict
 from products.models import Product
+from rest_framework.response import Response #will take over the json response
+from rest_framework.decorators import api_view #convert function to an api view
+from products.serializers import ProductSerializer
 
+
+@api_view(["GET", "POST"])
 def api_home(request, *args, **kwargs):
-    model_data = Product.objects.all().order_by("?").first()    
+    instance = Product.objects.all().order_by("?").first()    
     data= {}
-    if model_data:
-        data = model_to_dict(model_data)  
-        
-    return JsonResponse(data)
+    if instance:
+        #data = model_to_dict(instance)
+        data = ProductSerializer(instance).data  
+    return Response(data)
+    # return JsonResponse(data) before drf response to return json file
 #in order to send the response as httpresponse we need to serialize the data, but Decimal data is non serializable and convert it to json string which is also tedious, this is where django rest  framework will help us :)
     #     json_data_str = json.dumps(data)      
     # return HttpResponse(json_data_str, headers = {'content-type':'application/json'})#so by content type is text/html 

@@ -7,8 +7,8 @@ endpoint = " http://127.0.0.1:8000/api/";
 
 re_response = requests.get(endpoint, json = {"Testcase":"Hello world"}) # Application programming interface 
 #re_response = requests.get(endpoint, json = {"Testcase":"Hello world"}) can add a json here, will reflect in the data not in the form part.
-print(re_response.text)
-print(re_response.headers)
+# print(re_response.text)
+# print(re_response.headers)
 # Phone -> Camera , and every app uses camera through an api not directly , securely accessing resources is done using API
 
 #web based api is rest api , there are many web based api , but rest is one of them
