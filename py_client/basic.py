@@ -5,7 +5,7 @@ import requests
 endpoint = " http://127.0.0.1:8000/api/";
 #endpoint = "https://codeforces.com"
 
-re_response = requests.get(endpoint, json = {"Testcase":"Hello world"}) # Application programming interface 
+re_response = requests.post(endpoint, json = {"title":"Abc123" ,"content":"Hello world","price":"abc134"}) # Application programming interface 
 #re_response = requests.get(endpoint, json = {"Testcase":"Hello world"}) can add a json here, will reflect in the data not in the form part.
 # print(re_response.text)
 # print(re_response.headers)

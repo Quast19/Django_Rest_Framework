@@ -8,14 +8,21 @@ from rest_framework.decorators import api_view #convert function to an api view
 from products.serializers import ProductSerializer
 
 
-@api_view(["GET", "POST"])
+@api_view(["POST"])
 def api_home(request, *args, **kwargs):
-    instance = Product.objects.all().order_by("?").first()    
-    data= {}
-    if instance:
-        #data = model_to_dict(instance)
-        data = ProductSerializer(instance).data  
-    return Response(data)
+    # instance = Product.objects.all().order_by("?").first()    
+    # data= {}
+    # if instance:
+    #     #data = model_to_dict(instance)
+    #     data = ProductSerializer(instance).data  
+    #getting data from the models here code
+    serializer = ProductSerializer(data = request.data)
+    if serializer.is_valid(raise_exception=True):#for robust message use raise_exception
+        # data = serializer.save()
+        print(serializer.data)
+    #getting data from the post request
+        return Response(serializer.data)
+    return Response({"invalid":"not good data, or in serializable data"}, status = 400)#if raise exception is not used, used this
     # return JsonResponse(data) before drf response to return json file
 #in order to send the response as httpresponse we need to serialize the data, but Decimal data is non serializable and convert it to json string which is also tedious, this is where django rest  framework will help us :)
     #     json_data_str = json.dumps(data)      
