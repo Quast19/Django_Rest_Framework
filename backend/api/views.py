@@ -18,7 +18,8 @@ def api_home(request, *args, **kwargs):
     #getting data from the models here code
     serializer = ProductSerializer(data = request.data)
     if serializer.is_valid(raise_exception=True):#for robust message use raise_exception
-        # data = serializer.save()
+        #instance = serializer.save()
+        serializer.save()
         print(serializer.data)
     #getting data from the post request
         return Response(serializer.data)
