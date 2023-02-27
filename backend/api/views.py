@@ -1,5 +1,5 @@
 # from django.shortcuts import render
-# from django.http import JsonResponse , HttpResponse useless as drf response is used
+from django.http import JsonResponse , HttpResponse 
 import json
 from django.forms.models import model_to_dict
 from products.models import Product
@@ -8,18 +8,19 @@ from rest_framework.decorators import api_view #convert function to an api view
 from products.serializers import ProductSerializer
 
 
-@api_view(["POST"])
+@api_view(["POST","GET"])
 def api_home(request, *args, **kwargs):
-    # instance = Product.objects.all().order_by("?").first()    
-    # data= {}
+    # instance= Product.objects.all().order_by("?").first()
+    # data = {}
     # if instance:
-    #     #data = model_to_dict(instance)
-    #     data = ProductSerializer(instance).data  
+    #     # data = model_to_dict(instance, fields=['id','price','title'])
+    #     data = ProductSerializer(instance).data
+    # return Response(data)
     #getting data from the models here code
     serializer = ProductSerializer(data = request.data)
     if serializer.is_valid(raise_exception=True):#for robust message use raise_exception
         #instance = serializer.save()
-        serializer.save()
+        #serializer.save()
         print(serializer.data)
     #getting data from the post request
         return Response(serializer.data)
