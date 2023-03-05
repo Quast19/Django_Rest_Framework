@@ -5,10 +5,14 @@ from rest_framework import response
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from ..api.permissions import IsStaffEditorPermission
+from api.permissions import IsStaffEditorPermission
 from api.authentication import TokenAuthentication
+from api.mixins import IsStaffEditorPermission
+
+
+
 ########################## IMPORTS ##################################################################
-class ProductListCreateAPIView(generics.ListCreateAPIView):
+class ProductListCreateAPIView(IsStaffEditorPermission,generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     authentication_classes = [
@@ -29,13 +33,13 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
 product_list_create_view =ProductListCreateAPIView.as_view()
 
 
-class ProductDetailAPIview(generics.RetrieveAPIView):
+class ProductDetailAPIview(IsStaffEditorPermission,generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     
 product_detail_view = ProductDetailAPIview.as_view()
 
-class ProductUpdateAPIview(generics.UpdateAPIView):
+class ProductUpdateAPIview(IsStaffEditorPermission,generics.UpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = 'pk'
@@ -46,7 +50,7 @@ class ProductUpdateAPIview(generics.UpdateAPIView):
             instance.content = instance.title   
 product_update_view = ProductUpdateAPIview.as_view()
 
-class ProductDestroyAPIview(generics.DestroyAPIView):
+class ProductDestroyAPIview(IsStaffEditorPermission,generics.DestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = 'pk'
@@ -59,7 +63,7 @@ class ProductDestroyAPIview(generics.DestroyAPIView):
 product_delete_view = ProductDestroyAPIview.as_view()
 
 
-class ProductListAPIview(generics.ListAPIView):
+class ProductListAPIview(IsStaffEditorPermission,generics.ListAPIView):
     '''
     Not Gonna use this method
     '''
