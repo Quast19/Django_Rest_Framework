@@ -4,5 +4,5 @@ from products.viewsets import ProductGenericViewSet
 
 router = DefaultRouter()
 router.register('products', ProductGenericViewSet, basename='products') 
-print(router.urls)
+# print(router.urls)
 urlpatterns = router.urls
