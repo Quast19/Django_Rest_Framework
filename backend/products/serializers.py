@@ -4,13 +4,13 @@ from .models import Product
 from . import validators
 from api.serializers import UserPublicSerializer
 class ProductSerializer(serializers.ModelSerializer):
-    owner = UserPublicSerializer(source = 'user' , read_only = True)
+    # owner = UserPublicSerializer(source = 'user' , read_only = True)
     my_discount = serializers.SerializerMethodField(read_only=True)
-    edit_url = serializers.SerializerMethodField(read_only=True)
-    url = serializers.HyperlinkedIdentityField(
-        view_name = 'product-detail',
-        lookup_field = 'pk',
-    )
+    # edit_url = serializers.SerializerMethodField(read_only=True)
+    # url = serializers.HyperlinkedIdentityField(
+    #     view_name = 'product-detail',
+    #     lookup_field = 'pk',
+    # )
     # email = serializers.EmailField(source = 'user.email', read_only = True)
     
     title = serializers.CharField(validators = [validators.validate_title_no_hello, validators.unique_product_title])
@@ -20,11 +20,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields=[
             # 'email',
             #'name', 
-            
-            'owner',
             'pk',
-            'url',
-            'edit_url',
             'title', 
             'content',
             'price',
